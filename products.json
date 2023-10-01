@@ -20,7 +20,7 @@
     {
       "sys": { "id": "3" },
       "fields": {
-        "title": "Water melon",
+        "title": "water melon",
         "price": 12.99,
         "image": { "fields": { "file": { "url": "./img/product-3.jpg" } } }
       }
@@ -28,7 +28,7 @@
     {
       "sys": { "id": "4" },
       "fields": {
-        "title": "Cherry",
+        "title": "berries",
         "price": 22.99,
         "image": { "fields": { "file": { "url": "./img/product-4.jpg" } } }
       }
@@ -36,7 +36,7 @@
     {
       "sys": { "id": "5" },
       "fields": {
-        "title": "fridge",
+        "title": "grapes",
         "price": 88.99,
         "image": { "fields": { "file": { "url": "./img/product-5.jpg" } } }
       }
@@ -44,7 +44,7 @@
     {
       "sys": { "id": "6" },
       "fields": {
-        "title": "dresser",
+        "title": "guaver",
         "price": 32.99,
         "image": { "fields": { "file": { "url": "./img/product-6.jpg" } } }
       }
@@ -52,15 +52,15 @@
     {
       "sys": { "id": "7" },
       "fields": {
-        "title": "couch",
+        "title": "apple",
         "price": 45.99,
-        "image": { "fields": { "file": { "url": "./img/product-7.jpg" } } }
+        "image": { "fields": { "file": { "url": "./img/product-7.jpeg" } } }
       }
     },
     {
       "sys": { "id": "8" },
       "fields": {
-        "title": "table",
+        "title": "orange",
         "price": 33.99,
         "image": { "fields": { "file": { "url": "./img/product-8.jpeg" } } }
       }

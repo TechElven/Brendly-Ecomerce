@@ -1,3 +1,11 @@
+const client = contentful.createClient({
+  // This is the space ID. A space is like a project folder in Contentful terms
+  space: "ie1089x3euz8",
+  // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+  accessToken: "DOR5EZHItdGLtHBzC-Z8Otpcpy6onwTwHYUyQWe48qo",
+});
+
+
 //variables
 
 const cartBtn = document.querySelector(".cart-btn");
@@ -20,9 +28,19 @@ let buttonsDom = [];
 class Products {
   async getProducts() {
     try {
-      let result = await fetch("products.json");
-      let data = await result.json();
-      let products = data.items;
+      //fetching the prodcuts using contentful
+      let contentful = await client.getEntries({
+        content_type: "brrendlyFruitsProduct"
+    })
+     
+        // .then((response) => console.log(response, items))
+        // .catch(console.log(error));
+// fetching the product from local storage 
+
+      // let result = await fetch("products.json");
+      // let data = await result.json();
+
+      let products = contentful.items;
       products = products.map((item) => {
         const { title, price } = item.fields;
         const { id } = item.sys;
@@ -99,7 +117,6 @@ class UI {
     });
     cartTotal.innerText = parseFloat(tempTotal.toFixed(2));
     cartItems.innerHTML = itemsTotal;
-    console.log(cartTotal, cartItems);
   }
 
   addCartItem(item) {
@@ -148,50 +165,44 @@ class UI {
     });
 
     // cart functionality
-    cartContent.addEventListener('click', event => {
-        if(event.target.classList.contains('remove-item') ) {
-            let removeItem = event.target;
-            let id = removeItem.dataset.id;
-            cartContent.removeChild(removeItem.parentElement.parentElement);
-            this.removeItem(id)
+    cartContent.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-item")) {
+        let removeItem = event.target;
+        let id = removeItem.dataset.id;
+        cartContent.removeChild(removeItem.parentElement.parentElement);
+        this.removeItem(id);
+      } else if (event.target.classList.contains("fa-chevron-up")) {
+        let addAmount = event.target;
+        let id = addAmount.dataset.id;
+        let tempItem = cart.find((item) => item.id === id);
+        tempItem.amount = tempItem.amount + 1;
+        Storage.saveCart(cart);
+        this.setCartValues(cart);
+        //we will use nextElementSibling to traverse to the amount elemtn
+        addAmount.nextElementSibling.innerText = tempItem.amount;
+      } else if (event.target.classList.contains("fa-chevron-down")) {
+        let subAmount = event.target;
+        let id = subAmount.dataset.id;
+        let tempItem = cart.find((item) => item.id === id);
+        tempItem.amount = tempItem.amount - 1;
+        console.log(tempItem.amount);
+        if (tempItem.amount > 0) {
+          Storage.saveCart(cart);
+          this.setCartValues(cart);
+          subAmount.previousElementSibling.innerText = tempItem.amount;
+        } else {
+          cartContent.removeChild(subAmount.parentElement.parentElement);
+          this.removeItem(id);
         }
-        else if (event.target.classList.contains('fa-chevron-up')) {
-            let addAmount = event.target;
-            let id = addAmount.dataset.id;
-            let tempItem = cart.find(item => item.id === id)
-            tempItem.amount = tempItem.amount + 1;
-            Storage.saveCart(cart);
-            this.setCartValues(cart);
-            //we will use nextElementSibling to traverse to the amount elemtn 
-            addAmount.nextElementSibling.innerText = tempItem.amount;
-        }
-        else if(event.target.classList.contains('fa-chevron-down')) {
-            let subAmount = event.target;
-            let id = subAmount.dataset.id;
-            let tempItem = cart.find(item => item.id === id);
-            tempItem.amount = tempItem.amount - 1;
-            console.log(tempItem.amount);
-            if(tempItem.amount > 0) {
-                Storage.saveCart(cart);
-                this.setCartValues(cart);
-                subAmount.previousElementSibling.innerText = tempItem.amount;
-
-            } else {
-                cartContent.removeChild(subAmount.parentElement.parentElement);
-                this.removeItem(id)
-            }
-
-
-        }
-    })
-
+      }
+    });
   }
 
   clearCart() {
     let cartItems = cart.map((item) => item.id);
     cartItems.forEach((id) => this.removeItem(id));
     while (cartContent.children.length > 0) {
-        cartContent.removeChild(cartContent.children[0]);
+      cartContent.removeChild(cartContent.children[0]);
     }
     this.hideCart();
   }
@@ -202,7 +213,7 @@ class UI {
     Storage.saveCart(cart);
     let button = this.getSingleButton(id);
     button.disabled = false;
-    button.innerHTML = `<i class = "fas fa-shoppping-cart"></i> add to cart`
+    button.innerHTML = `<i class = "fas fa-shoppping-cart"></i> add to cart`;
   }
 
   getSingleButton(id) {
