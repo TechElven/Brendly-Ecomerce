@@ -15,6 +15,30 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+  
+  ::-webkit-scrollbar {
+    width: 1.3rem;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: #797979;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #222224;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f9f9f9;
+  } 
+  
+
 body {
     color: var(--mainBlack);
     background-color: var(--mainWhite);
@@ -28,8 +52,8 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    background: rgb(231, 226, 221);
-    z-index: 1;
+    background: var(--mainWhite);
+    z-index: 100;
 }
 
 .navbar-center {
@@ -74,20 +98,47 @@ body {
 
 .banner {
     text-align: center;
-    background: rgba(255, 255, 255, 0.8);
+    /* background: rgba(255, 255, 255, 0.8); */
     display: inline-block;
     padding: 2rem;
+    color: white;
+    animation: appear 6s;
+
+}
+
+.banner-tag {
+    color: black;
+    background-color: #cceaec;
+    font-style: italic;
+    width: 50%;
+    margin: 10px 7rem ;
+   
+    
+    /* padding: 5px ; */
 }
 
 .banner-title {
-    font-size: 3.4rem;
+    /* color: #fff; */
+    font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: var(--mainSpacing);
-    margin-bottom: 3rem;
+    font-weight: 400;
+    /* margin-bottom: 3rem; */
+    /* margin: 10px; */
 }
 
+.banner-oneliner {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 100;
+    font-style: italic;
+    /* margin-top: -2rem; */
+    
+}
+
+
 .banner-btn {
-    padding: 1rem 3rem;
+    padding: 1rem 2rem;
     text-transform: uppercase;
     letter-spacing: var(--mainSpacing);
     font-size: 1rem;
@@ -96,13 +147,46 @@ body {
     border: 1px solid var(--primaryColor);
     transition: var(--mainTransition);
     cursor: pointer;
+    border-radius: 4rem;
 }
 
 .banner-btn:hover {
     background: transparent;
-    color: var(--primaryColor);
+    color: var(--mainWhite);
+    /* animation: clickUp .6s; */
 }
 
+.banner-btn:active {
+    animation: clickDown 1s;
+}
+
+
+
+/* ------animations----- */
+
+@keyframes appear {
+   from {
+    /* margin: 0; */
+    opacity: 0;
+   }
+
+   to {
+    /* margin: 100; */
+    opacity: 1;
+   }
+}
+
+
+@keyframes clickDown {
+    from {
+        transform: translateY(-2px);
+    }
+
+    to {
+        transform: translateY(2px);
+    }
+
+}
 /* ------Products-------- */
 .products {
     padding: 4rem 0;
@@ -197,7 +281,7 @@ body {
     background: transparent;
     transition: var(--mainTransition);
     background: rgb(240, 157, 81, 0.5);
-    z-index: 2;
+    z-index: 10000;
     visibility: hidden;
 }
 
@@ -209,6 +293,7 @@ body {
     height: 100%;
     overflow: scroll;
     background: var(--mainWhite);
+    /* margin-top: 1rem; */
     padding: 1.5rem;
     transition: var(--mainTransition);
     transform: translateX(100%);
@@ -231,6 +316,8 @@ body {
 .close-cart {
     font-size: 1.7rem;
     cursor: pointer;
+    margin-top: 2rem;
+    /* background-color: red; */
 }
 .cart h2 {
     text-transform: capitalize;
@@ -286,4 +373,4 @@ body {
     margin-bottom: 1rem;
   }
   
-  /* ------------
+  /*-----End of cart----- */
